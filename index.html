@@ -1,0 +1,223 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Andrew Shidel's portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="vendor/bootstrap.min.css" media="screen">
+    <link rel="stylesheet" href="vendor/swatch.css">
+
+    <style>
+    .imgWrap {
+        position: relative;
+        width: 320px;
+        height: 200px;
+        top: -30px;
+        display: inline-block;
+        margin: 15px;
+    }
+    .imgWrap img {
+      width: 100%;
+      height: 100%;
+    }
+    .imgDescription {
+        position: absolute;
+        top: 1px;
+        bottom: 0;
+        left: 0px;
+        right: 0;
+        width: 320px;
+        height: 199px;
+        background: rgba(29, 106, 154, 0.72);
+        color: #FFF;
+        visibility: hidden;
+        opacity: 0;
+        text-align: left;
+    }
+    .imgWrap:hover .imgDescription {
+        visibility: visible;
+        opacity: 1;
+    }
+    .hintHeader {
+        display: inline-block;
+        font-size: 20pt;
+        width: 300px;
+        margin-top: 15px;
+        margin-bottom: 5px;
+        border-bottom: 2px solid;
+    }
+    .frame {
+        border-width: 0;
+        width: 100%;
+        max-height: 500px;
+        height: 500px;
+        overflow: hidden;
+    }
+    .showMore {
+       width: 100%; 
+       text-align: center; 
+       border-bottom: 1px solid #000; 
+       line-height: 0.1em;
+       margin: 10px 0 20px; 
+    } 
+
+    .showMore span { 
+        background:#fff; 
+        padding:0 10px; 
+    }
+    </style>
+
+    <script>
+    function autoResize(id){
+        var element = document.getElementById(id);
+        var newHeight = element.contentWindow.document.body.scrollHeight;
+        var newWidth = element.contentWindow.document.body.scrollWidth;
+        element.style.height = newHeight + "px";
+        element.style.width = newWidth + "px";
+    }
+    window.onload = function() {
+        var showMores = document.getElementsByClassName("showMore");
+        for (var i in showMores) {
+            showMores[i].onclick = function(e){showMore(e)};
+        }
+    }
+    function showMore(e) {
+        var id = e.target.parentNode.getAttribute("id") + "Frame";
+        if (e.target.innerHTML.indexOf("More") > 0) {
+            document.getElementById(id).style.maxHeight = "none";
+            autoResize(id);
+            e.target.innerHTML = "Show Less"
+        } else {
+            document.getElementById(id).style.maxHeight = "500px";
+            e.target.innerHTML = "Show More"
+        }
+    }
+    </script>
+
+  </head>
+  <body>
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="../" class="navbar-brand">Andrew Shidel</a>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://github.com/AndrewShidel" target="_blank">Github</a></li>
+            <li><a href="https://www.linkedin.com/pub/andrew-shidel/94/989/173" target="_blank">Linkedin</a></li>
+            <li><a href="resume.pdf" target="_blank">Resume</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="container">
+      <br><br>
+      <h5 class="text-center">Hello, my name is Andrew. I am a Computer Science major from Drexel University, and a programming enthusiast.</h5>
+      <br>
+      <h2 class="text-center">Here are some projects that I have built</h2>
+      <br>
+      <div class="text-center">
+        <a href='https://github.com/AndrewShidel/Drone-App'>
+            <div class="imgWrap">
+                <img src='img/drone.png' alt="Project Zephor"></img>
+                <p class="imgDescription">
+                    <span class="hintHeader">Project Zephor</span>
+                    <br>An open source drone OS build using android as the ”brain”, UDP
+                    for communications, and QT with a leap motion camera as the
+                    control system.</p>
+            </div>
+        </a>
+        <a href='https://github.com/AndrewShidel/Drone-App'>
+            <div class="imgWrap">
+                <img src='img/brain.png' alt="AI Box"></img>
+                <p class="imgDescription">
+                    <span class="hintHeader">AI Box</span>
+                    <br>An open source AI library written in JAVA and C++, designed to combine genetic algorithms, evolutionary programing, neural networks, and adjustable virtual circuits.</p>
+            </div>
+        </a>
+        <a href='https://github.com/AndrewShidel/Drone-App'>
+            <div class="imgWrap">
+                <img src='img/groupit.png' alt="Groupit"></img>
+                <p class="imgDescription">
+                    <span class="hintHeader">Groupit</span>
+                    <br>An android app providing a simple, universal means for
+                    organizing and communicating between any group or
+                    organization. Built with a team of Drexel students, using
+                    Java, Node.js, and the Facebook SDK.</p>
+            </div>
+        </a>
+        <a href='https://github.com/AndrewShidel/Opened-Fire'>
+            <div class="imgWrap">
+                <img src='img/opened.png' alt="Opened Fire"></img>
+                <p class="imgDescription">
+                    <span class="hintHeader">Opened Fire</span>
+                    <br>Opened-fire is a post-apocalyptic shooter game built with HTML5 and JavaScript.</p>
+            </div>
+        </a>
+        <a href='https://github.com/AndrewShidel/Drone-App'>
+            <div class="imgWrap">
+                <img src='img/where.png' alt="Groupit"></img>
+                <p class="imgDescription">
+                    <span class="hintHeader">WheresItAt</span>
+                    <br>Ever wondered about from store to store trying to find a specific item?  Then WheresItAt.com has got you covered.  Search for any item, and WheresItAt it will find a store near you that sells it.</p>
+            </div>
+        </a>
+        <a href='https://chrome.google.com/webstore/detail/chrome-leap-tools/cdggacgonehkioknlolpdmdnbaollpca'>
+            <div class="imgWrap">
+                <img src='img/leap.png' alt="Chrome Leap Tools"></img>
+                <p class="imgDescription">
+                    <span class="hintHeader">Chrome Leap Tools</span>
+                    <br>Navigate Chrome using your Leap Motion Controller. Achieve tasks like scrolling, navigation the history, and closing tabs.</p>
+            </div>
+        </a>
+        <a href='https://github.com/AndrewShidel/reddit-social'>
+            <div class="imgWrap">
+                <img src='img/reddit_social.png' alt="Reddit Social Plugin"></img>
+                <p class="imgDescription">
+                    <span class="hintHeader">Reddit Social</span>
+                    <br>Reddit Social is an attempt to build a commenting system system similar to Facebook's Social Plugin. This will allow users to comment on content on your site using their reddit account.</p>
+            </div>
+        </a>
+        <a href='https://play.google.com/store/apps/details?id=tucker.shidel.greenscreenphotography&hl=en'>
+            <div class="imgWrap">
+                <img src='img/green.png' alt="Green Screen Photography"></img>
+                <p class="imgDescription">
+                    <span class="hintHeader" style="font-size: 16pt;">Green Screen Photography</span>
+                    <br>Green screen photography is an easy, and powerful way to achieve green screen effects with you phone's camera.</p>
+            </div>
+        </a>
+        <a href='thumbsup.io'>
+            <div class="imgWrap">
+                <img src='img/thumbs.png' alt="ThumbsUp.io"></img>
+                <p class="imgDescription">
+                    <span class="hintHeader" style="font-size: 16pt;">ThumbsUp.io</span>
+                    <br><b>Note: This is a work in progress project</b><br><br>A Youtube community and fundraising platform built from the ground up for forum, comments, and fundraising campains.</p>
+            </div>
+        </a>
+      </div>
+      <br>
+
+      <iframe class="frame" id="speechFrame" src="frames/speechToText.html" onLoad="autoResize('speech');" scrolling="no"></iframe>
+      <h4 class="showMore" id="speech"><span>Show More</span></h4>
+
+      <iframe class="frame" id="proxyFrame" src="frames/NodeProxy.html" onLoad="autoResize('proxy'); "scrolling="no"></iframe>
+      <h4 class="showMore" id="proxy"><span>Show More</span></h4>
+
+      <br>
+      <h2 class="text-center">Letter Frequency Across English Words with Clojure</h2>
+      <p class="lead">
+      Most Unix systems have a file called 'words'. It is usually located at /usr/share/dict/words.  This file is commanly used by spell check programs.  The following clojure program divides this word list into four, and in parallel it counts the occurrence of every letter.
+      <p>
+      <script src="https://gist.github.com/shidel-dev/8b16c9e56d0f0477b189.js"></script>
+      <br>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="vendor/bootstrap.js"></script>
+    <script src="vendor/swatch.js"></script>
+  </body>
+</html>

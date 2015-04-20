@@ -1,0 +1,253 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>viewFrames documentation</title>
+    <script type="text/javascript" src="shCore.js"></script>
+    <script type="text/javascript" src="shBrushJScript.js"></script>
+    <link href="shCore.css" rel="stylesheet" type="text/css" />
+    <link href="shThemeDefault.css" rel="stylesheet" type="text/css" />
+    <base target="_parent">
+
+    <style type="text/css">
+    body {
+        width:100%;
+        margin:0;
+        background: #fff;
+        font-family:"Lucida Sans Unicode", "Lucida Grande", sans-serif;
+        color: #5C5959;
+        ;
+    }
+    div {
+        margin:0;
+    }
+    .container {
+        width: 95%;
+        margin: auto;
+        overflow-x: hidden;
+        margin-left: 2.5%;
+    }
+    .clearfix:after {
+        clear:both;
+        content:' ';
+        display:block;
+        font-size:0;
+        line-height:0;
+        visibility:hidden;
+        width:0;
+        height:0
+    }
+    #example{width: 700px;
+             height: 300px;}
+    h1 {
+        font-size: 27pt;
+        border-bottom: 4px solid;
+        width:100%;
+    }
+    .box {
+        width: 50%;
+        background-color: #FFF;
+        overflow-wrap: break-word;
+    }
+    @media screen and (max-width:680px) {
+        .box {
+            width: 85%;
+            margin-left: 7.5%;
+        }
+    }
+    @media screen and (max-width:450px) {
+        .box {
+            width: 95%;
+            margin-left: 2.5%;
+        }
+    }
+    </style>
+</head>
+
+<body>
+    <div class="container clearfix">
+        <h1>Speech Recognition using Web Technologies.</h1>
+        <p>Speech recognition has existed for a very long time, and has been a historic challenge in computer science. The subject has always been filled with error, and inaccessible to the common developer. Now, with the internet full of speech recognition engines for nearly every language and platform, it has become a prevalent way of interacting with computers.</p>
+
+        <p>In this tutorial, we will introduce one of the simplest, but also a very powerful way to do speech recognition using Google chrome's web kit speech recognition api. This api allows for fine control and accurate results, but is currently available on Chrome version 25 and above.</p>
+
+        <p>The example below demonstrates the api generating results almost immediately, as the user speaks.</p>
+
+        <p>The end result will resemble this: (The full version with souce code can be found <a href='http://shidel.com/voice.html'>here</a>.) </p>
+    </div>
+        
+    <iframe src="http://shidel.com/voiceIframe.html" id="example" frameborder="0"></iframe>
+    <div class="container clearfix">
+   <p>Lets jump in:</p>
+    
+    <p>First, we will set up simple interface to begin interpreting, and to display the results. If you are interested only in the api skip this section.</p>
+    
+    
+    
+    <p>Here, we will set up a Text box to display the results, and a button to begin and to stop recording:</p>
+<pre class="brush: js">
+&lt;div>
+    &lt;textarea id='textfield'>&lt;/textarea>
+&lt;/div>
+&lt;span id='mic'>
+    &lt;img src="mic.png" />
+&lt;/span>
+</pre>
+<p>And the the CSS:</p>
+<pre class="brush: js">
+span {
+     position:absolute;
+     border-radius:50%;
+     margin-left:71%;
+     margin-top:8%;
+     width:6vh;
+     height:6%;
+     background-color:transparent;
+}
+
+#textfield {
+     height:95%;
+     width:95%;
+     position:absolute;
+     left:2.5%;
+     top:2.5%;
+}
+
+div {
+     border-radius:15px;
+     position:absolute;
+     width:45%;
+     height:40%;
+     margin-top:10%;
+     margin-left:25.5%;
+     background-color:#FFF;
+     border-color:#000;
+     border-style:solid;
+     border-width:2px;
+}
+
+img {
+     width:80%;
+     margin-left:10%;
+     margin-top:.6vh;
+     position:absolute;
+}  
+</pre>
+<p>The above will produce a simple layout to begin working with. Now comes the exciting part.
+
+We first need to set up some simple variables. They are described in the comments below.
+</p>
+<pre class="brush: js">
+//Is the recognition currently active?
+var toggle=true;
+
+//Handles the speach recognition.
+var voice= new webkitSpeechRecognition();
+
+//User should be able to start and stop speaking seemlessly, and see intermediate results as they speek.
+voice.continuous=true;
+voice.interimResults=true;
+var interimResult = '';
+
+//holds the current sentence.
+var final = "";
+
+//Holds the final version of the speach recognition.
+var allText = new Array();
+
+var textArea = $('#textfield');
+var textAreaID = 'textfield';
+</pre>
+</br>
+<p>Before doing any recognition, we will also need to set up some code to simply stop and start the service. This is done in the click listener for the microphone button.</p>
+<pre class="brush: js">
+ document.getElementById('mic').addEventListener('click', function(event){
+    if (toggle){
+        voice.start();
+        document.getElementById('mic').style.backgroundColor='red';
+        toggle=false;
+    }   
+    else{
+        voice.stop();
+        document.getElementById('mic').style.backgroundColor='transparent';
+        toggle=true;
+    } 
+});
+</pre> 
+</br>
+<p> 
+Next will come the centerpiece of the program. This is the function that is called everytime the recognizer finds a match. This means that it will be called quite often, and will sometimes contain incorrect, or unfinished results. There are several other such methods defined for the recognizer object such as: 
+</p>
+<p>
+voice.onstart = function() {},
+</p>
+<p>
+voice.onerror = function(event) {},
+</p>
+<p>
+and voice.onend = function() {}
+</p>
+<p>
+These functions were not used in this example. The most important item in the "onresult" function is the event object passed in. This object contains functions for retrieving the results from the recognizer. The declaration is as follows:
+</p>
+<pre class = "brush: js">
+//Called when the recognizer gets new information.
+voice.onresult=function(event){}
+</pre>
+</br>
+<p>
+In the example, we will focus primarily on the results properly, used in the first line of the function, which contains a multidimensional array of all the past results, with the inner arrays being a list of the most probable results, with index 0 being the most likely.  
+</p>
+<p>
+In the first line, we use the results array to get the most recent and most likely result and append it to an array containing all of the results so far. We also call the transcript properly on this result in order to get a human readable version.
+</p>
+<pre class = "brush: js">  
+allText[allText.length] = event.results[event.results.length-1][0].transcript;
+</pre>
+</br>
+<p>
+Next, we will determine if the user has finished speaking be using isFinal method. Once we have determined that the user has finished speaking, we empty the text area and add the most recent interpretation.
+</p>  
+<pre class = "brush: js">
+if ( !(event.results[event.results.length-1].isFinal) ){
+    textArea.empty();
+    textArea.append(allText[allText.length-1]);
+    return 0;
+}
+</pre>  
+</br>
+<p>
+Next, we will fill the text area with the intermediate result, or what the SR engine currently thinks you are saying. Once finished, these messages will be replaced with the full message (this is what was done in the above if statement).
+</p>
+<pre class="brush: js">
+textArea.empty();document.getElementById
+final += allText[allText.length-1];
+textArea.append(final);
+allText = new Array();
+</pre>  
+</br>  
+<p>To put it all together, the full method is:</p>
+<pre class="brush: js">
+voice.onresult=function(event){      
+    allText[allText.length] = event.results[event.results.length-1][0].transcript;
+        
+    if ( !(event.results[event.results.length-1].isFinal) ){
+        textArea.empty();
+        textArea.append(allText[allText.length-1]);    
+        return 0;
+    }
+            
+    textArea.empty();
+    final += allText[allText.length-1];
+    textArea.append(final);
+    allText = new Array();
+};
+</pre> 
+</br>   
+</div>
+
+<script type="text/javascript">SyntaxHighlighter.all()</script>    
+</body>
+
+</html>
