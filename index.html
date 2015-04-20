@@ -23,8 +23,8 @@
     }
     .imgDescription {
         position: absolute;
-        top: 1px;
-        bottom: 0;
+        top: 0px;
+        bottom: 0px;
         left: 0px;
         right: 0;
         width: 320px;
@@ -71,6 +71,7 @@
     <script>
     function autoResize(id){
         var element = document.getElementById(id);
+        if (element.contentWindow === undefined) {return;}
         var newHeight = element.contentWindow.document.body.scrollHeight;
         var newWidth = element.contentWindow.document.body.scrollWidth;
         element.style.height = newHeight + "px";
@@ -89,6 +90,7 @@
             autoResize(id);
             e.target.innerHTML = "Show Less"
         } else {
+            window.scrollTo(0, document.body.scrollTop-(parseInt(document.getElementById(id).style.height)-500));
             document.getElementById(id).style.maxHeight = "500px";
             e.target.innerHTML = "Show More"
         }
@@ -199,6 +201,9 @@
         </a>
       </div>
       <br>
+
+      <iframe class="frame" id="knightsFrame" src="frames/knightsTour.html" onLoad="autoResize('knights'); "scrolling="no"></iframe>
+      <h4 class="showMore" id="knights"><span>Show More</span></h4>
 
       <iframe class="frame" id="speechFrame" src="frames/speechToText.html" onLoad="autoResize('speech');" scrolling="no"></iframe>
       <h4 class="showMore" id="speech"><span>Show More</span></h4>
